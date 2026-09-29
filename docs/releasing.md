@@ -1,4 +1,4 @@
-# Releasing RepoPrompt CE
+﻿# Releasing RepoPrompt CE
 
 RepoPrompt CE has three release/update lanes:
 
@@ -827,6 +827,28 @@ The promotion gate confirms:
   resources.
 - The reviewed external artifact manifest regenerates exactly from both ZIP and
   DMG app contents and is mirrored unchanged to the public updater release.
+
+## Post-promotion operator checklist
+
+After **Promote Release** succeeds, complete these operator-facing checks
+before announcing the release. The promotion workflow performs anonymous
+verification of published assets, but these confirmations guard state that the
+workflow does not control.
+
+- [ ] **Source and updater releases are published and immutable**: confirm
+  `repoprompt/repoprompt-ce` and `repoprompt/repoprompt-ce-updates`
+  releases for the promoted tag exist, are marked latest, and their assets
+  match the reviewed draft.
+- [ ] **Latest public appcast reports the new version**: fetch the public
+  appcast and confirm the channel item reports the expected
+  `MARKETING_VERSION` and a monotonically increasing `CFBundleVersion`.
+- [ ] **Homebrew tap updated**: update the
+  [`repoprompt/homebrew-repoprompt-ce`](https://github.com/repoprompt/homebrew-repoprompt-ce)
+  cask version and ZIP checksum, then run the
+  [Post-promote Homebrew tap checks](#post-promote-homebrew-tap-checks) smoke.
+- [ ] **Branch protection restored**: if any temporary branch-protection or
+  ruleset bypass was enabled for a specially permitted release, restore and
+  verify the original protection settings on `main` and release branches.
 
 ## Post-promote Homebrew tap checks
 
