@@ -1,4 +1,4 @@
-﻿# Releasing RepoPrompt CE
+# Releasing RepoPrompt CE
 
 RepoPrompt CE has three release/update lanes:
 
